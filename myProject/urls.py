@@ -24,6 +24,7 @@ urlpatterns = [
     path("advancedsearch/", AdvancedSearchView.as_view(), name="advanced_search"),
     path("detail/target/<str:name>/", TargetDetailView.as_view(), name="target"),
     path('detail2/<str:name>/<str:id>/', download_sdf, name='download_sdf'),
+    path('accounts/', include('allauth.urls')),
 ]
 
 
