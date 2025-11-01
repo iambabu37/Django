@@ -50,7 +50,7 @@ class Target(models.Model):
     score = models.CharField(max_length=255,null=True,blank=True,default="Not available")
     iupac_name = models.CharField(max_length=555,null=True,blank=True,default = "Not available")
     kegg = models.CharField(max_length = 255,null=True,blank = True,default = "Not available")
-    dock_im = models.CharField(max_length =255,blank = True,null = True,default = "Not available")
+    #dock_im = models.CharField(max_length =255,blank = True,null = True,default = "Not available")
     dock_image = models.ImageField(upload_to=img_dock,null = True,blank=True,default="Not available")
     dock_reference = models.ManyToManyField(Target_reference,blank= True)
     
@@ -178,8 +178,6 @@ class Plant(models.Model):
     family = models.CharField(max_length = 255,null = True,blank=True,default="Not available")
     synonyms = models.CharField(max_length=255,null= True,blank=True,default="Not available")
     groups = models.CharField(max_length=255,null = True,blank=True,default="Not available")
-    related_plant = models.CharField(max_length = 255,null = True,blank=True,default="Not available")
-    related_diseae = models.CharField(max_length = 255,null = True,blank=True,default="Not available")
     plant_image = models.ImageField(upload_to=img_plant,null = True,blank=True,default="Not available")
     description = models.TextField(null = True,blank=True,default="Not available")
     time_of_add_plant = models.DateTimeField(auto_now_add=True, null=True, blank=True)
