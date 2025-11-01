@@ -1,2 +1,7 @@
 data
 venv
+image_downloaded/
+.env
+*.sql
+db.sqlite3
+.vscode
