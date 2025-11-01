@@ -1,0 +1,120 @@
+{% extends "my_app/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  .profile-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ccc;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  .profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+    margin-bottom: 15px;
+    transition: transform 0.4s ease;
+  }
+  .profile-photo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.5);
+  }
+  .profile-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .profile-details li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+  }
+  .profile-details li:nth-child(even) {
+    background-color: #f9faff;
+  }
+  .profile-details strong {
+    font-weight: 600;
+    color: #222;
+  }
+  .logout-button, .edit-button {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    margin-top: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+  }
+  .logout-button {
+    background-color: #dc3545;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  .logout-button:hover {
+    background-color: #c82333;
+  }
+  .edit-button {
+    background-color: #28a745; /* green */
+    color: white;
+    margin-top: 15px;
+    text-decoration: none;
+    line-height: 1.5;
+    transition: background-color 0.3s ease;
+  }
+  .edit-button:hover {
+    background-color: #1e7e34;
+    color:white;
+  }
+</style>
+
+<div class="profile-container">
+  <div class="profile-header">
+    <img
+      src="{% if user.profile_image_url %}{{ user.profile_image_url }}{% else %}https://www.gravatar.com/avatar/?d=mp&s=120{% endif %}"
+      alt="Profile Photo"
+      class="profile-photo"
+    />
+    <h2>{{ emailprefix }}</h2>
+    <p>@{{ emailprefix }}</p>
+  </div>
+
+  <ul class="profile-details">
+    <li><strong>Email:</strong> <span>{{ user.email }}</span></li>
+    <li><strong>First Name:</strong> <span>{{ user.first_name }}</span></li>
+    <li><strong>Last Name:</strong> <span>{{ user.last_name }}</span></li>
+    <li><strong>Address:</strong> <span>{{ user.address|default:"Not provided" }}</span></li>
+    <li><strong>Staff Status:</strong> <span>{{ user.is_staff }}</span></li>
+    <li><strong>Active:</strong> <span>{{ user.is_active }}</span></li>
+    <li><strong>Date Joined:</strong> <span>{{ user.date_joined|date:"F j, Y, g:i a" }}</span></li>
+    <li><strong>Last Login:</strong> <span>{{ user.last_login|default:"Never" }}</span></li>
+  </ul>
+
+  <a href="{% url 'profile_edit' %}" class="edit-button">Edit Profile</a>
+  <button class="logout-button" onclick="confirmLogout()">Logout</button>
+</div>
+
+<script>
+  function confirmLogout() {
+    if (confirm("Are you sure you want to logout?")) {
+      window.location.href = "{% url 'logout' %}";
+    }
+  }
+</script>
+
+{% endblock %}

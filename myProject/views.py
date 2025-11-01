@@ -1,153 +1,121 @@
-from django.shortcuts import render,redirect,get_object_or_404
-from django.db.models import Q
-from myapp.models import *
-from myapp.forms import *
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse, FileResponse
+from django.core.paginator import Paginator
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from myapp.models import Plant, Phytochemical, Target
+from myapp.forms import ContactForm
+from django.http import HttpResponse
 import requests
 from tempfile import NamedTemporaryFile
+import os
 
+class AboutView(LoginRequiredMixin,View):
+    login_url = '/login/'
+    def get(self, request):
+        return render(request, "my_app/about.html")
 
-def about(request):
-    return render(request,"my_app/about.html")
+class HomeView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request):
+        return render(request, "my_app/home.html")
 
+class ContactView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request):
+        form = ContactForm()
+        return render(request, 'my_app/contact.html', {'form': form})
 
+    def post(self, request):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        return render(request, 'my_app/contact.html', {'form': form})
 
-def home(request):
-    return render(request,"my_app/home.html")
+class PlantListView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request):
+        plants = Plant.objects.all().order_by("name")
+        return render(request, "my_app/plant.html", {"dicts": plants})
 
+class HelpView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request):
+        return render(request, "my_app/help.html")
 
+class PlantDetailView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request, name):
+        plant = get_object_or_404(Plant, name=name)
+        phytochemicals = plant.phytochemical_value.all()
+        return render(request, "my_app/plantdetail.html", {'dicts': plant, "dict2": phytochemicals})
 
+class SearchView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request):
+        var = request.GET.get("main_search", "").strip()
+        if not var:
+            messages.error(request, 'Please enter a valid search term.')
+            return render(request, "my_app/search.html")
 
-def contact(request):
-	if request.method == 'POST':
-		form = ContactForm(request.POST)
-		if form.is_valid():
-			form.save()  # Save the data to the database
-			return redirect('home')  # Redirect to a success page
-	return render(request, 'my_app/contact.html')
-    
+        phytochemicals = Phytochemical.objects.filter(
+            Q(synonymous_names__icontains=var) & Q(synonymous_names__istartswith=var)
+        ).order_by("name")
 
-def plant(request):
-    obj = Plant.objects.all().order_by("name")
-    content = {"dicts":obj}
-    return render(request,"my_app/plant.html",content)
+        if not phytochemicals.exists():
+            messages.info(request, 'No results found.')
 
+        paginator = Paginator(phytochemicals, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request, "my_app/search.html", {"dicts": page_obj})
 
-def help(request):
-    return render(request,"my_app/help.html")
+class CompoundDetailView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request, name):
+        phytochemical = get_object_or_404(Phytochemical, name=name)
+        return render(request, "my_app/compound_detail.html", {"dicts": phytochemical})
 
+class PlantCompoundDetailView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request, name):
+        phytochemical = get_object_or_404(Phytochemical, name=name)
+        return render(request, "my_app/compound_detail.html", {"dicts": phytochemical})
 
+class AdvancedSearchView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request):
+        return render(request, "my_app/acknowledgement.html")
 
-def plantviews(request,name):
-   
-    obj = get_object_or_404(Plant, name=name)
-   
-    plantobj = obj.phytochemical_value.all() if obj else None
-    # obj2 = plantobj.reference_paper.all() if obj else None
-    content = {'dicts':obj,
-               "dict2":plantobj}
-    print(content)
-     
-    return render(request,"my_app/plantdetail.html",content)
+class TargetDetailView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request, name):
+        target = get_object_or_404(Target, name=name)
+        return render(request, "my_app/target.html", {"dicts": target})
 
-
-# function for search 
-def search(request):
-    
-    var = request.GET.get("main_search","").strip()
-    print(var)
-    page_number = request.GET.get('page',1)
-    if not var or var.isspace():
-        messages.error(request, 'Please enter a valid search term.')
-        return render(request, "my_app/search.html")
-    # dict = Plant.objects.all().order_by("name")
-    dicts = Phytochemical.objects.filter(
-         Q(synonymous_names__icontains = var ) &
-         Q(synonymous_names__istartswith =var) 
-     ).order_by("name")
-    print(dicts)
-    if not dicts:
-        messages.info(request, 'No results found.')
-    
-    paginator = Paginator(dicts, 10)  # Show 10 plants per page
-    page_number = request.GET.get('page')
-    print(page_number)
-    print(request.GET)
-    final_data = paginator.get_page(page_number)
-
-    # try: 
-    #     plant_page = paginator.page(final_data)
-    # except PageNotAnInteger:
-    #     plant_page = paginator.page(1)
-    # except EmptyPage:
-    #     plant_page = paginator.page(paginator.num_pages)
-
-    content = {"dicts": final_data}
-
-    return render(request, "my_app/search.html", content)
-    
-    # content = {"dicts":dict}
-
-    # return render(request,"my_app/search.html",content)
-
-
-#function for compound details
-
-def compound_detail(request,name):
-    
-    phytochemical_instance = Phytochemical.objects.get(name=name)
-    
-    content ={"dicts":phytochemical_instance}
-    print(content)    
-    return render (request,"my_app/compound_detail.html",content)
-
-def plant_compound_detail(request,name):
-    
-    phytochemical_instance = get_object_or_404(Phytochemical, name=name)
-    
-    content ={"dicts":phytochemical_instance}
-    print(content)    
-    return render (request,"my_app/compound_detail.html",content)
-
-def download_sdf(request, name,id):
-    # PubChem URL for the compound with the given name
-    print(f"{name}")
+# Download sdf function remains as function based per your request
+def download_sdf(request, name, id):
     pubchem_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/CID/{id}/record/SDF/"
-
-    # Fetch SDF content from PubChem
     response = requests.get(pubchem_url)
-
     if response.status_code == 200:
         sdf_content = response.content
-
-        # Create a temporary file and write the SDF content
         with NamedTemporaryFile(delete=False, suffix='.sdf') as tmp_file:
             tmp_file.write(sdf_content)
             tmp_file_path = tmp_file.name
 
-        # Set the response content type to force a download
         response = HttpResponse(content_type='application/octet-stream')
         response['Content-Disposition'] = f'attachment; filename="{name}.sdf"'
 
-        # Write the file content to the response
         with open(tmp_file_path, 'rb') as file:
             response.write(file.read())
 
-        # Delete the temporary file
         os.remove(tmp_file_path)
-
         return response
 
     return HttpResponse(f"Error fetching SDF content for compound name {name} from PubChem")
 
-def advanced_search(request):
-     
-     return render(request,"my_app/acknowledgement.html")
 
-def target(request,name):
-     obj = get_object_or_404(Target,name = name)
-     content = {"dicts":obj}
-     return render(request,"my_app/target.html",content)
-     
+def custom_404_view(request, exception=None):
+    return render(request, '404.html', status=404)

@@ -1,18 +1,19 @@
 {% extends 'my_app/base.html' %}
 {% load static %}
-{% block home %}
+{% block content %}
 <section id="hero" class="hero d-flex align-items-center"
   style="background-image : url('../../static/image/head2.jpg');
-  padding-top: 80px; 
   background-position: right;
   background-position-y:-10px;
-  background-color:rgb(216, 231, 231);">
+  background-color:rgb(216, 231, 231);
+  margin-top: 5%;"
+  >
   <!-- ... rest of your code ... -->
   <div class="container">
     <div class="row justify-content-between">
       <div class="col-lg  justify-content-center">
         <h2  style="color:rgb(48, 48, 48)">Plant-Derived Phytocompound Database </h2>
-        <h6 class='fs-5 text-dark'>Welcome to our botanical treasure trove! Discover the
+        <h6 class='fs-5 text-dark'>Welcome to our botanial treasure trove! Discover the
           magic of plant phytocompounds on our webpage. Immerse yourself in a world where nature's wisdom meets digital
           brilliance. Explore, learn, and be enchanted by the wonders of our Plant Phytocompound Database—your gateway
           to the extraordinary benefits of botanical brilliance
@@ -31,7 +32,7 @@
           <div class="col-lg-3 col-6">
             <div class="stats-item text-center w-100 h-100">
               <span></span>
-              <p>Clients</p>
+              <p>Compounds</p>
             </div>
           </div><!-- End Stats Item -->
 
@@ -39,7 +40,7 @@
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
                 class="purecounter"></span>
-              <p>Projects</p>
+              <p>Plants</p>
             </div>
           </div><!-- End Stats Item -->
 
@@ -47,7 +48,7 @@
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1"
                 class="purecounter"></span>
-              <p>Support</p>
+              <p>Proteins</p>
             </div>
           </div><!-- End Stats Item -->
 
@@ -55,7 +56,7 @@
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1"
                 class="purecounter"></span>
-              <p>Workers</p>
+              <p>Publications</p>
             </div>
           </div><!-- End Stats Item -->
 
@@ -72,48 +73,52 @@
 
 <main id="main">
   <!-- ======= About Us Section ======= -->
-  <section id="about" class="about pt-0">
-    <div class="container pt-5" data-aos="fade-up">
+ <!-- ======= About Us Section ======= -->
+<section id="about" class="about pt-0">
+  <div class="container pt-5" data-aos="fade-up">
 
-      <div class="row gy-4">
-        <div class="col-lg-6 position-relative align-self-start order-lg-last order-first">
-          <img src="" class="img-fluid" alt="">
-        </div>
-        <div class="col-lg-6 content order-last  order-lg-first">
-          <h3>About Us</h3>
-          <p>
-            PhytoChemDB is a project dedicated to cataloging and exploring the diverse world of phytochemicals
-            foundb in plants. Our mission is to provide a comprehensive and accessible resource for researchers,students,
-            and enthusiasts interested in the chemical compounds that make plants unique.
-          </p>
-          <ul>
-            <li data-aos="fade-up" data-aos-delay="100">
-              <i class="bi bi-diagram-3"></i>
-              <div>
-                <h5>Ullamco laboris nisi ut aliquip consequat</h5>
-                <p>Magni facilis facilis repellendus cum excepturi quaerat praesentium libre trade</p>
-              </div>
-            </li>
-            <li data-aos="fade-up" data-aos-delay="200">
-              <i class="bi bi-fullscreen-exit"></i>
-              <div>
-                <h5>Magnam soluta odio exercitationem reprehenderi</h5>
-                <p>Quo totam dolorum at pariatur aut distinctio dolorum laudantium illo direna pasata redi</p>
-              </div>
-            </li>
-            <li data-aos="fade-up" data-aos-delay="300">
-              <i class="bi bi-broadcast"></i>
-              <div>
-                <h5>Voluptatem et qui exercitationem</h5>
-                <p>Et velit et eos maiores est tempora et quos dolorem autem tempora incidunt maxime veniam</p>
-              </div>
-            </li>
-          </ul>
-        </div>
+    <div class="row gy-4">
+      <div class="col-lg-6 position-relative align-self-start order-lg-last order-first">
       </div>
-
+      <div class="col-lg-6 content order-last order-lg-first">
+        <h3>About Us</h3>
+        <p>
+          <strong>Antibacterial Compound Database for Bacteria (AnBac-DB)</strong> is a dedicated platform designed to compile, curate, and provide easy access to information on antibacterial compounds effective against various bacterial species. Our mission is to empower researchers, healthcare professionals, and students with a comprehensive, reliable, and user-friendly resource that accelerates the discovery and understanding of antibacterial agents.
+        </p>
+        <ul>
+          <li data-aos="fade-up" data-aos-delay="100">
+            <i class="bi bi-diagram-3"></i>
+            <div>
+              <h5>Comprehensive Compound Catalog</h5>
+              <p>
+                AnBac-DB features an extensive collection of natural and synthetic antibacterial compounds, including their chemical properties, sources, and documented bacterial targets.
+              </p>
+            </div>
+          </li>
+          <li data-aos="fade-up" data-aos-delay="200">
+            <i class="bi bi-fullscreen-exit"></i>
+            <div>
+              <h5>Empowering Research & Innovation</h5>
+              <p>
+                Our database is a powerful tool for researchers and drug developers, supporting the search for novel antibacterial agents and facilitating comparative studies across different bacterial pathogens.
+              </p>
+            </div>
+          </li>
+          <li data-aos="fade-up" data-aos-delay="300">
+            <i class="bi bi-broadcast"></i>
+            <div>
+              <h5>Accessible & User-Friendly</h5>
+              <p>
+                With intuitive search and filtering options, AnBac-DB makes it easy for users to find relevant compounds, explore their mechanisms of action, and stay updated with the latest advancements in antibacterial research.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-  </section><!-- End About Us Section -->
+
+  </div>
+</section>
 </main>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -139,4 +144,4 @@
   });
 </script>
 
-{% endblock home %}
+{% endblock content %}

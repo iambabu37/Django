@@ -1,7 +1,7 @@
 {% extends 'my_app/base.html'%}
 {% load static %}
 
-{% block cmd %}
+{% block content %}
 
 <style>
   table thead tr th {
@@ -496,7 +496,7 @@
     <div class="col-md-3 top-0 end-0 " id="fixed-column">
       <div class="p text-end" id="fixed-column">
         <div class="btn btn-primary top-0 ">
-          <a href="{% url 'download_sdf' name=dicts.name id=dicts.pubchem_id %}" style="color:white">
+          <a href="{% url 'download_sdf' name=dicts.name id=dicts.mkproperties.pubchem %}" style="color:white">
             DOWNLOAD (<span class="fs-5"> sdf </span>)
           </a>
         </div>
@@ -554,4 +554,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </script>
-{% endblock cmd %}
+{% endblock content %}

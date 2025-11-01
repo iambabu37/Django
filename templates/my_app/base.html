@@ -11,46 +11,64 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-
   <link rel="icon" type="image/jpg" href="{% static 'image/favicon.jpg' %}">
 
   <!-- Google Fonts -->
-
-  <!--   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Poppins:wght@400;700&display=swap"
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link herf="{% static 'css/bootstrap-icons.css' %}" rel=stylesheet>
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-  <!-- Include Bootstrap Icons stylesheet -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css" rel="stylesheet">
 
-
-
-  <!-- Template Main CSS File -->
+  <!-- Main CSS -->
   <link href="{% static 'css/main.css' %}" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="{% static 'js/jquery.dataTables.min.js'%}"></script>
 
   <style>
     body {
-      background-color: rgb(220, 250, 215);
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: rgb(252, 252, 252);
+      font-family: 'Open Sans', 'Poppins', sans-serif;
     }
 
     .logo img {
       height: 80px;
       object-fit: cover;
       border-radius: 10px;
-      width: 220px;
-      position: absolute;
-      /* Position the image within the logo container */
-      /* Move the image up by half of the overflow value (30px/2 = 15px) */
-      left: 10px;
+      width: 200px;
+      max-width: 90vw;
+    }
+
+    .custom-nav-link {
+      font-size: 1.15rem !important;
+      font-weight: 700 !important;
+      color: #fff !important;
+      transition: border-bottom 0.2s, color 0.2s !important;
+      padding-bottom: 5px !important;
+      margin-left: 12px !important;
+      margin-right: 12px !important;
+    }
+
+    .rounded-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+
+    .custom-nav-link:hover,
+    .custom-nav-link:focus {
+      color: #ffd700 !important;
+      border-bottom: 3px solid #ffd700 !important;
+      text-decoration: none !important;
+    }
+
+    .navbar-nav .nav-link.active {
+      border-bottom: 3px solid #fff !important;
     }
 
     .icon_social {
@@ -58,95 +76,80 @@
       width: 38px;
       border-radius: 19px;
     }
+
+    @media (max-width: 991.98px) {
+      .navbar-nav .nav-link {
+        font-size: 1.2rem !important;
+        padding: 10px 0 !important;
+        margin: 0 !important;
+        text-align: center !important;
+        width: 100% !important;
+        display: block !important;
+      }
+
+      .navbar-nav {
+        background: #0d6efd !important;
+        border-radius: 0 0 15px 15px;
+        padding-bottom: 1rem !important;
+      }
+
+      .navbar-collapse {
+        background: #0d6efd !important;
+        border-radius: 0 0 15px 15px;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <!-- Responsive Navbar -->
+  <header id="header" class="fixed-top bg-primary py-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class=" container-fluid d-flex align-items-center justify-content-between">
+        <a href="{% url 'home' %}" class="navbar-brand logo d-flex align-items-center">
+          <img src="{% static 'image/logo.png' %}" alt="Logo">
+        </a>
+        <!-- Burger Menu Button -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navbarTogglerBtn">
+          <span class="navbar-toggler-icon"></span>
+          <span class="close-icon d-none" style="font-size:2rem; color:white;">&times;</span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav mb-2 me-4 mb-lg-0">
+            <li class="nav-item"><a class="nav-link custom-nav-link" href="{% url 'home' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link custom-nav-link" href="{% url 'search' %}">Search</a></li>
+            <li class="nav-item"><a class="nav-link custom-nav-link" href="{% url 'plant' %}">Plants</a></li>
+            <li class="nav-item"><a class="nav-link custom-nav-link"
+                href="{% url 'advanced_search' %}">Acknowledgement</a></li>
+            <li class="nav-item"><a class="nav-link custom-nav-link" href="{% url 'help' %}">How to use</a></li>
+            <li class="nav-item"><a class="nav-link custom-nav-link" href="{% url 'contact' %}">Contact</a></li>
+            <li class="nav-item">
+              <a href = "{%url 'profile' %}">
+                <img
+                src="{% if user.profile_image_url %}{{ user.profile_image_url }}{% else %}https://www.gravatar.com/avatar/?d=mp&s=40{% endif %}"
+                alt="Profile" class="rounded-avatar">
+              </a>
+            </li>
 
-  <header id="header" class="header d-flex align-items-center fixed-top pt-3 pb-3 bg-primary block">
-    <div class="container-fluid container-xl container-md d-flex align-items-center justify-content-between">
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- End Navbar -->
 
-      <a href="{%url 'home'%}" class="logo d-flex align-items-center log">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="{% static 'image/logo.png' %}" style="border-radius: 10px; width:240px" alt="Logo ">
-
-      </a>
-
-      <i class="mobile-nav-show"></i>
-      <i class="mobile-nav-toggle"></i>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="{% url 'search' %}">Search</a></li>
-          <li><a href="{% url 'plant' %}">Plants</a></li>
-          <li><a href="{% url 'advanced_search' %}">Acknowledgement</a></li>
-          <li><a href="{% url 'help' %}"> How to use </a>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
-      </nav><!-- .navbar -->
-
-    </div>
-  </header><!-- End Header -->
-  <!-- End Header -->
-  <main class="mb-5 pb-5" style=>
-
-    <!-- block for index page-->
-    {%block index %}
-
-    {% endblock index %}
-
-    <!-- block for home page-->
-
-    {% block home %}
-
-    {% endblock home %}
-    <!-- block for plant page-->
-
-    {% block plant %}
-
-    {%endblock %}
-
-    <!-- block for contact page-->
-
-    {% block contact%}
-
-    {% endblock contact%}
-
-    <!-- block for help page-->
-
-    {% block help %}
-
+  <main class="mb-5 pb-5" style="margin-top:120px;">
+    {% block content %}
     {% endblock %}
-
-    <!----block for plant detail-->
-
-
-    {% block plantdetail %}
-
-    {% endblock %}
-    <!--BLOCK FOR CMD-->
-    {%block cmd%}
-
-    {%endblock%}
-
-    <!--block for adv -->
-
-    {% block adv %}
-
-    {% endblock %}
-
-    <!-- block for target-->
-    {% block target %}
-    {% endblock %}
-
   </main>
+
   <!-- ======= Footer ======= -->
-
   <footer id="footer" class="footer" style="background-color: #051328;">
-
     <div class="container">
       <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-info">
-          <a href="index.html" class="logo d-flex align-items-center">
+          <a href="{% url 'home' %}" class="logo d-flex align-items-center">
             <span>Anbac-DB</span>
           </a>
           <p>The Antibacterial Phytocompound Database is a valuable resource that compiles information on natural
@@ -157,11 +160,11 @@
             <a href="#" class="twitter"><img class="icon_social" src="{% static 'image/twitter.png' %}"
                 alt="twitter"></a>
             <a href="#" class="facebook"><img class="icon_social" src="{% static 'image/facebook.png' %}"
-                alt="twitter"></a>
-            <a href="https://www.instagram.com/bioinformaticsalu?igsh=YzJyNmZzdXp5eHZu" class="instagram" target="_blank"><img class="icon_social" src="{% static 'image/instagram.png' %}"
-                alt="twitter"></a>
-            <a href="https://youtube.com/@departmentofbioinformatics?si=bSXmr6zGeyvr6TNU" target="_blank" class="linkedin"><img class="icon_social" src="{% static 'image/youtube.png' %}"
-                alt="twitter"></a>
+                alt="facebook"></a>
+            <a href="https://www.instagram.com/bioinformaticsalu?igsh=YzJyNmZzdXp5eHZu" class="instagram"
+              target="_blank"><img class="icon_social" src="{% static 'image/instagram.png' %}" alt="instagram"></a>
+            <a href="https://youtube.com/@departmentofbioinformatics?si=bSXmr6zGeyvr6TNU" target="_blank"
+              class="linkedin"><img class="icon_social" src="{% static 'image/youtube.png' %}" alt="youtube"></a>
           </div>
         </div>
 
@@ -182,8 +185,8 @@
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'search' %}">Search</a></li>
             <li><a href="{% url 'plant' %}">Plant</a></li>
-            <li><a href="{% url 'advanced_search' %}">Acknowledgement</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'advanced_search' %}">Signup</a></li>
           </ul>
         </div>
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
@@ -194,9 +197,7 @@
             <strong>Phone:</strong>+917867893877<br>
             <strong>Email:</strong>babukanthasamy333777@gmail.com<br>
           </p>
-
         </div>
-
       </div>
     </div>
 
@@ -205,16 +206,36 @@
         &copy; Copyright <strong><span>bob</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-
         Designed by <a href="#">Me</a>
       </div>
     </div>
-
-  </footer><!-- End Footer -->
+  </footer>
   <!-- End Footer -->
+
+  <!-- JS Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- Navbar toggler icon swap -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggler = document.getElementById('navbarTogglerBtn');
+      const navbarNav = document.getElementById('navbarNav');
+      const togglerIcon = toggler.querySelector('.navbar-toggler-icon');
+      const closeIcon = toggler.querySelector('.close-icon');
+
+      navbarNav.addEventListener('show.bs.collapse', function () {
+        togglerIcon.classList.add('d-none');
+        closeIcon.classList.remove('d-none');
+      });
+      navbarNav.addEventListener('hide.bs.collapse', function () {
+        togglerIcon.classList.remove('d-none');
+        closeIcon.classList.add('d-none');
+      });
+    });
+  </script>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 </html>
