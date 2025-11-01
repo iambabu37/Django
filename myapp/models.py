@@ -107,7 +107,7 @@ class McProp(models.Model):
 class ADMEProp(models.Model):
 
     name = models.CharField(null=True,blank=True,max_length=255,default="Not available")
-    bioavailability_score = models.FloatField(max_length=255,null = True,blank=True,default="Not available")
+    bioavailability_score = models.CharField(max_length=255,null = True,blank=True,default="Not available")
     solubility_class_esol = models.CharField(max_length=255,null = True,blank=True,default="Not available")
     solubility_class_silicos_it = models.CharField(max_length=255,null = True,blank=True,default="Not available")
     blood_brain_barrier_permeation = models.CharField(max_length=255,null = True,blank=True,default="Not available")
@@ -182,7 +182,7 @@ class Plant(models.Model):
     related_diseae = models.CharField(max_length = 255,null = True,blank=True,default="Not available")
     plant_image = models.ImageField(upload_to=img_plant,null = True,blank=True,default="Not available")
     description = models.TextField(null = True,blank=True,default="Not available")
-    time_of_add_plant = models.DateTimeField(auto_now_add= True)
+    time_of_add_plant = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     phytochemical_value = models.ManyToManyField(Phytochemical ,blank = True)
     referenceplant = models.ManyToManyField( Reference, blank = True)
 
