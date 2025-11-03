@@ -30,8 +30,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
+# SECRET_KEY = env('SECRET_KEY')
+# DEBUG = env('DEBUG')
+
+
+SECRET_KEY = 'django-insecure-6v+zmw@px68xifxtxa5(cw-yxkgl&l!l2&zxyyd6b9+*)feeop'
+DEBUG = False
 
 # Application definition
 
