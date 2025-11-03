@@ -4,10 +4,11 @@
 {% block content %}
 
 <style>
-    table thead tr th{
-        background-color: rgb(0, 110, 255) !important ;
-        color:white !important;}
- </style>
+    table thead tr th {
+        background-color: rgb(0, 110, 255) !important;
+        color: white !important;
+    }
+</style>
 <div class="container pt-5 mt-5">
     <div class="row">
         <div class="col-md-6 lh-lg">
@@ -22,15 +23,27 @@
                 <strong class="fs-5">Group:</strong> {{dicts.description}}<br>
                 <strong class="fs-5">Synonymous names:</strong><br> {{dicts.groups}}<br>
                 <strong class="fs-5">Descriptions:</strong><br>{{dicts.related_diseae}}<br>
-                
+                <strong>Name:</strong> {{dicts.name }}<br>
+                <strong>Botanical Name:</strong> {{ dicts.botanical_name }}<br>
+                <strong>Family:</strong> {{ dicts.family }}<br>
+                <strong>Related Plant:</strong> {{ dicts.related_plant }}<br>
+                <strong>Related Disease:</strong> {{ dicts.related_diseae }}<br>
+                <strong>Plant Image:</strong> {{ dicts.plant_image }}<br>
+                <strong>Description:</strong> {{ dicts.description }}<br>
+                <strong>Time Added:</strong> {{ dicts.time_of_add_plant|date:"D d M Y H:i:s" }}<br>
+                <strong>Groups:</strong> {{ dicts.groups }}<br>
+                <strong>Synonyms:</strong> {{ dicts.synonyms }}<br>
             </div>
-        </div>
-        <div class="col-md-6 pt-3 d-flex justify-content-end">
-            <img  class = "pe-5 me-5" style = "width:360px; height:300px; border-radius:15px;"src="{{dicts.related_diseae.url}}" alt="plant image"> </img>
 
         </div>
     </div>
-   
+    <div class="col-md-6 pt-3 d-flex justify-content-end">
+        <img class="pe-5 me-5" style="width:360px; height:300px; border-radius:15px;" src="{{dicts.related_diseae.url}}"
+            alt="dicts image"> </img>
+
+    </div>
+</div>
+
 </div>
 
 <div class="container pt-5">
@@ -45,20 +58,22 @@
         </thead>
         <tbody>
             {% for dict1 in dict2 %}
-            
+
             <tr>
-                <td style = "width:150px">{{dicts.name}}</td>
-                <td style = "width:150px"><a  style="color:rgb(0, 106, 155);" href="{% url 'compounddetail' dict1.name %}">{{dict1.name}}</a></td>
-                
-                <td style = "width:400px">
-                
-                <ol>  
-                    {% for plant in dict1.reference_paper.all%}
-                <li style = "margin-bottom: 10px;">
-                <a style= "color:rgb(0, 106, 155);height: 20px;" href="{{plant.reference}}" target="_blank">{{plant.title}}</a>
-                </li>
-                    {% endfor %}
-                </ol>
+                <td style="width:150px">{{dicts.name}}</td>
+                <td style="width:150px"><a style="color:rgb(0, 106, 155);"
+                        href="{% url 'compounddetail' dict1.name %}">{{dict1.name}}</a></td>
+
+                <td style="width:400px">
+
+                    <ol>
+                        {% for plant in dict1.reference_paper.all%}
+                        <li style="margin-bottom: 10px;">
+                            <a style="color:rgb(0, 106, 155);height: 20px;" href="{{plant.reference}}"
+                                target="_blank">{{plant.title}}</a>
+                        </li>
+                        {% endfor %}
+                    </ol>
                 </td>
             </tr>
             {% endfor %}
