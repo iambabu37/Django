@@ -50,7 +50,7 @@ class Target(models.Model):
     score = models.CharField(max_length=255,null=True,blank=True,default="Not available")
     iupac_name = models.CharField(max_length=555,null=True,blank=True,default = "Not available")
     kegg = models.CharField(max_length = 255,null=True,blank = True,default = "Not available")
-    #dock_im = models.CharField(max_length =255,blank = True,null = True,default = "Not available")
+    dock_im = models.CharField(max_length =255,blank = True,null = True,default = "Not available")
     dock_image = models.ImageField(upload_to=img_dock,null = True,blank=True,default="Not available")
     dock_reference = models.ManyToManyField(Target_reference,blank= True)
     
