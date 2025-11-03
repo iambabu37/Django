@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ["*"]
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
-
+  
 # Application definition
 
 INSTALLED_APPS = [
