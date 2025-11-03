@@ -23,7 +23,7 @@
                 <strong class="fs-5">Group:</strong> {{dicts.description}}<br>
                 <strong class="fs-5">Synonymous names:</strong><br> {{dicts.groups}}<br>
                 <strong class="fs-5">Descriptions:</strong><br>{{dicts.related_diseae}}<br>
-                <strong>Name:</strong> {{dicts.name }}<br>
+                <!-- <strong>Name:</strong> {{dicts.name }}<br>
                 <strong>Botanical Name:</strong> {{ dicts.botanical_name }}<br>
                 <strong>Family:</strong> {{ dicts.family }}<br>
                 <strong>Related Plant:</strong> {{ dicts.related_plant }}<br>
@@ -32,13 +32,13 @@
                 <strong>Description:</strong> {{ dicts.description }}<br>
                 <strong>Time Added:</strong> {{ dicts.time_of_add_plant|date:"D d M Y H:i:s" }}<br>
                 <strong>Groups:</strong> {{ dicts.groups }}<br>
-                <strong>Synonyms:</strong> {{ dicts.synonyms }}<br>
+                <strong>Synonyms:</strong> {{ dicts.synonyms }}<br> -->
             </div>
 
         </div>
     </div>
     <div class="col-md-6 pt-3 d-flex justify-content-end">
-        <img class="pe-5 me-5" style="width:360px; height:300px; border-radius:15px;" src="{{dicts.related_diseae.url}}"
+        <img class="pe-5 me-5" style="width:360px; height:300px; border-radius:15px;" src="{{dicts.related_plant }}"
             alt="dicts image"> </img>
 
     </div>
